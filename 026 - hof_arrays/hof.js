@@ -22,6 +22,8 @@ const nomes = personagens.map(function (personagem){
 
 console.log(nomes)
 
+// FILTER
+
 // const orcs = []
 
 // for (let i = 0; i < personagens.length; i++) {
@@ -35,3 +37,13 @@ const orcs = personagens.filter(function(personagem){
 })
 
 console.log(orcs)
+
+// SORT
+
+personagens.sort(function(a, b){
+   return a.nível - b.nível
+})
+
+console.log(personagens);
+
+console.log(typeof nomes)
