@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Exercício 12</title>
+   <link rel="stylesheet" href="style.css">
+   <script src="index.js" defer></script>
+</head>
+
+<body>
+   <h1>Cadastro de Dev's</h1>
+   <hr>
+   <br>
+   <label for="nome-completo">Nome Completo:</label>
+   <input id="nome-completo" type="text" placeholder="Nome completo"><br><br>
+   <button id="add-btn" onclick="add()">Adicionar tecnologia</button><br><br>
+   
+   <div id="hide" class="hide">
+      <label for="tecnologia"></label>
+      <input type="text" id="tecnologia" placeholder="Nome da tecnologia"><br><br>
+      <input type="radio" id="exp1" name="sel">
+      <label for="exp1">0 - 2 anos</label>
+      <input type="radio" id="exp2" name="sel">
+      <label for="exp2">3 - 4 anos</label>
+      <input type="radio" id="exp3" name="sel">
+      <label for="exp1">5+ anos</label><br><br>
+      <button id="cadastrar" onclick="cadastrar()">Cadastrar</button>
+   </div>
+
+
+</body>
+
+</html>
