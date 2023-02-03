@@ -1,7 +1,7 @@
-const Deposit = require("./entities/Deposit")
-const Loan = require("./entities/Loan")
-const Transfer = require("./entities/Transfer")
-const User = require("./entities/User")
+const Deposit = require("./Deposit")
+const Loan = require("./Loan")
+const Transfer = require("./Transfer")
+const User = require("./User")
 
 module.exports = class App {
   static #users = []
