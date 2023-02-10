@@ -35,13 +35,79 @@ function createTransactionAmount(amount) {
   return span
 }
 
+function createEditTransactionBtn(transaction) {
+  const editBtn = document.createElement('button')
+  editBtn.classList.add('edit-btn')
+  editBtn.textContent = 'Editar'
+  editBtn.addEventListener('click', () => {
+    document.querySelector('#id').value = transaction.id
+    document.querySelector('#name').value = transaction.name
+    document.querySelector('#amount').value = transaction.amount
+  })
+  return editBtn
+}
+
+function createDeleteTransactionBtn(id) {
+  const deleteBTn = document.createElement('button')
+  deleteBTn.classList.add('delete-btn')
+  deleteBTn.textContent = 'Excluir'
+  deleteBTn.addEventListener('click', async () => {
+    await fetch(`http://localhost:3000/transactions/${id}`, { method: 'DELETE' })
+    deleteBTn.parentElement.remove()
+    const indexToRemove = transactions.findIndex((t) => t.id === id)
+    transactions.splice(indexToRemove, 1)
+    updateBalance()
+  })
+  return deleteBTn
+}
+
 function renderTransaction(transaction) {
   const container = createTransactionContainer(transaction.id)
   const title = createTransactionTitle(transaction.name)
   const amount = createTransactionAmount(transaction.amount)
+  const editBtn = createEditTransactionBtn(transaction)
+  const deleteBTn = createDeleteTransactionBtn(transaction.id)
 
-  container.append(title, amount)
+  container.append(title, amount, editBtn, deleteBTn)
   document.querySelector('#transactions').append(container)
+}
+
+async function saveTransaction(ev) {
+  ev.preventDefault()
+
+  const id = document.querySelector('#id').value
+  const name = document.querySelector('#name').value 
+  const amount = parseFloat(document.querySelector('#amount').value)
+
+  if (id) {
+    const response = await fetch(`http://localhost:3000/transactions/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify({name, amount}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    const transaction = await response.json()
+    const indexToRemove = transactions.findIndex((t) => t.id === id)
+    transactions.splice(indexToRemove, 1, transaction)
+    document.querySelector(`#transaction-${id}`).remove()
+    renderTransaction(transaction)
+  } else {
+    const response = await fetch('http://localhost:3000/transactions', {
+    method: 'POST',
+    body: JSON.stringify({ name, amount }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+
+    const transaction = await response.json()
+    transactions.push(transaction)
+    renderTransaction(transaction)
+  }
+  
+  ev.target.reset()
+  updateBalance()
 }
 
 async function fetchTransactions() {
@@ -67,5 +133,7 @@ async function setup() {
 }
 
 document.addEventListener('DOMContentLoaded', setup)
+document.querySelector('form').addEventListener('submit', saveTransaction)
+
 
 
