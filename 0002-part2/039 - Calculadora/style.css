@@ -42,7 +42,7 @@
  }
  
  button {
-   background-color: var(--primary-color);
+   background-color: var(--primary-color); 
    border: none;
    border-radius: .25rem;
    font-weight: 700;
@@ -117,4 +117,10 @@
  .success {
    border-color: var(--primary-color) !important;
    color: var(--primary-color) !important;
+ }
+
+ @media (max-width:410px) {
+  [data-value=" % "] {
+    font-size: 1.2rem !important;
+  }
  }
